@@ -31,8 +31,12 @@ def on_upload(e):
     src = e.value.get("real_path") or ""  # e.value = {"real_path": ..., "name": ...} — info about the uploaded file
     ok = bool(src) and os.path.isfile(src)
     ref_path = src if ok else ""
-    S.vp_preview_status = (f"📎 Received {os.path.basename(src)} — 5s of audio, no transcript needed." if ok
-                           else "❌ Upload failed, please try again.")
+    S.vp_preview_status = (f"📎 Received {os.path.basename(src)} — 5s of audio, no transcript needed." if ok else "❌ Upload failed, please try again.")
+    ss.refresh_page()
+
+def on_reset(e):  # user clicked ✕ on the uploader: forget the cloned voice, fall back to the selected preset
+    global ref_path
+    ref_path, S.vp_preview_status = "", ""
     ss.refresh_page()
 
 @ss.thread  # run in the background, so the page stays responsive while generating
@@ -44,15 +48,12 @@ def run_tts(voice, text):
         os.makedirs(OUT_DIR, exist_ok=True)
         out = os.path.join(OUT_DIR, f"gen_{int(time.time() * 1000)}.wav")
         state = model.get_state_for_audio_prompt(voice)
-        stream_audio_chunks(out, model.generate_audio_stream(model_state=state, text_to_generate=text),
-                            model.config.mimi.sample_rate)
+        stream_audio_chunks(out, model.generate_audio_stream(model_state=state, text_to_generate=text), model.config.mimi.sample_rate)
         elapsed = time.time() - t0
         with wave.open(out) as w: dur = w.getnframes() / w.getframerate()
         S.vp_status = f"⚡ Done in {elapsed:.1f}s — {dur:.1f}s of audio ({dur / elapsed:.1f}x real-time, CPU only)"
-        # disk housekeeping: keep only the newest 20 generated files
-        gens = sorted((os.path.join(OUT_DIR, f) for f in os.listdir(OUT_DIR) if f.startswith("gen_")),
-                      key=os.path.getmtime)  # oldest first
-        for f in gens[:-20]:  # everything except the newest 20
+        gens = sorted((os.path.join(OUT_DIR, f) for f in os.listdir(OUT_DIR) if f.startswith("gen_")), key=os.path.getmtime)
+        for f in gens[:-20]:  # keep only the newest 20 generated files
             with suppress(OSError): os.remove(f)
         with suppress(Exception):  # if the user refreshed the page meanwhile, `player` is stale — just skip playing
             player.src = out
@@ -83,7 +84,7 @@ with ss.row(justify="center"):
         with sb.action:
             preview_player = ss.audio(src=os.path.join(SAMPLES_DIR, f"{voice_code(VOICES[0])}.wav"), minimal=True, color="primary", width="fit-content")
         ss.space(16)
-        ss.audio(fileType="file", accept="audio/*", dragMode=True, minimal=False, downloadable=False, closable=True, block=True, color=ACCENT, label="Optional: drop a 5s voice sample to clone it (wav / mp3, any language)", onsuccess=on_upload)
+        ss.audio(fileType="file", accept="audio/*", dragMode=True, minimal=False, downloadable=False, closable=True, block=True, color=ACCENT, label="Optional: drop a 5s voice sample to clone it (wav / mp3, any language)", onsuccess=on_upload, onreset=on_reset)
         ss.text("@@vp_preview_status", size="small", type="grey-darken-1")
 with ss.row(width=PANEL_W, justify="center"): ss.button("🚀 Generate", type="primary", onclick=generate, block=True)
 ss.space(16)
@@ -92,6 +93,4 @@ with ss.row(justify="center"):
         player = ss.audio(downloadable=True, block=True, color=ACCENT)
         ss.space(12)
         ss.text("@@vp_status", size="small", type="grey-darken-1")
-with ss.row(justify="center"):
-    ss.text("Built with SimpleStart · TTS: Kyutai Pocket TTS · ", size="small")
-    ss.link("View source on GitHub", href="https://github.com/readever/pocket-tts-simplestart", size="small")
+with ss.row(justify="center"): ss.text("Built with SimpleStart · TTS: Kyutai Pocket TTS · ", size="small"); ss.link("View source on GitHub", href="https://github.com/readever/pocket-tts-simplestart", size="small")
