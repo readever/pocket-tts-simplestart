@@ -92,4 +92,6 @@ with ss.row(justify="center"):
         player = ss.audio(downloadable=True, block=True, color=ACCENT)
         ss.space(12)
         ss.text("@@vp_status", size="small", type="grey-darken-1")
-with ss.row(justify="center"): ss.text("Built with SimpleStart — this entire app is pure Python, zero JavaScript. TTS engine: Kyutai Pocket TTS (Apache 2.0 / MIT).", size="small")
+with ss.row(justify="center"):
+    ss.text("Built with SimpleStart · TTS: Kyutai Pocket TTS · ", size="small")
+    ss.link("View source on GitHub", href="https://github.com/readever/pocket-tts-simplestart", size="small")
