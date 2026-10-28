@@ -23,7 +23,7 @@ Built with [SimpleStart](https://pypi.org/project/simplestart/) (UI + interactio
 
 ```bash
 pip install -r requirements.txt
-ss app.py
+simplestart app.py   # 或 ss app.py，两个别名都可用
 ```
 
 First launch auto-downloads ~200MB model weights (ModelScope mirror by default, anonymous; falls back to Hugging Face). Open `http://localhost:8000` in your browser.

@@ -23,7 +23,7 @@
 
 ```bash
 pip install -r requirements.txt
-ss app.py
+simplestart app.py   # 或 ss app.py，两个别名都可用
 ```
 
 首次启动自动下载约 200MB 模型权重（默认走 ModelScope 国内直连，无需登录；不可达时回退 Hugging Face）。浏览器打开 `http://localhost:8000` 即可使用。
