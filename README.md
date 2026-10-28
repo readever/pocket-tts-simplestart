@@ -8,7 +8,7 @@ Built with [SimpleStart](https://pypi.org/project/simplestart/) (UI + interactio
 
 > ⚠️ Not affiliated with Kyutai Labs. Pocket TTS is their project. Please only clone voices you have permission to use.
 
-<img src="assets/images/pocket-tts.png" width="760" alt="Voice Playground: enter text, pick a voice, generate, then play or download">
+![Voice Playground: enter text, pick a voice, upload a reference clip, then play or download](assets/images/pocket-tts.png)
 
 > Live demo: [ModelScope Studio](https://modelscope.cn/studios/simplestart/PocketTTS_SimpleStart_Demo)
 
