@@ -8,6 +8,8 @@
 
 > ⚠️ 本项目与 Kyutai Labs 无关，Pocket TTS 是他们的项目。克隆他人声音前请确认已获得授权。
 
+<img src="assets/images/pocket-tts.png" width="760" alt="界面截图：输入文本、选择音色、上传参考音频、生成后可试听与下载">
+
 > 在线演示：[ModelScope 创空间](https://modelscope.cn/studios/simplestart/PocketTTS_SimpleStart_Demo)
 
 ## ✨ 特性
@@ -37,6 +39,7 @@ Pocket TTS 是零样本方案：一段 5 秒参考音频即可捕捉音色、口
 app.py                  # 整个应用（96 行）
 modelscope_patch.py     # 把权重下载重定向到 ModelScope（无需 token）
 assets/voice_samples/   # 9 个内置音色预览
+assets/images/          # 上文使用的界面截图
 requirements.txt
 LICENSE
 ```

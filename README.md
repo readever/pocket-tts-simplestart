@@ -8,6 +8,8 @@ Built with [SimpleStart](https://pypi.org/project/simplestart/) (UI + interactio
 
 > ⚠️ Not affiliated with Kyutai Labs. Pocket TTS is their project. Please only clone voices you have permission to use.
 
+<img src="assets/images/pocket-tts.png" width="760" alt="Voice Playground: enter text, pick a voice, generate, then play or download">
+
 > Live demo: [ModelScope Studio](https://modelscope.cn/studios/simplestart/PocketTTS_SimpleStart_Demo)
 
 ## ✨ Features
@@ -37,6 +39,7 @@ Pocket TTS is zero-shot: it captures timbre, accent, cadence and microphone char
 app.py                  # the whole app (96 lines)
 modelscope_patch.py     # redirects weight downloads to ModelScope (no token)
 assets/voice_samples/   # 9 built-in voice previews
+assets/images/          # screenshot used above
 requirements.txt
 LICENSE
 ```
