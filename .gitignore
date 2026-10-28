@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# Model weights (208MB) — auto-downloaded on first run via modelscope_patch.py
+assets/pocket_clone.safetensors
+
+# Runtime artifacts
+outputs/
+uploads/
+
+# OS junk
+.DS_Store
+
+# Internal dev notes (never publish)
+开发计划.md
+
+# Env & secrets
+.env
+.venv/
+venv/
